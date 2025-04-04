@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NerdZone - Science Forums For All Times</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: #1a1a2e;
+            color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo span.highlight {
+            color: #4d8bf5;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        nav a:hover {
+            color: #4d8bf5;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .hero {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a2e;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: #4d8bf5;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        
+        .cta-button:hover {
+            background-color: #3a78e7;
+        }
+        
+        .forum-finder {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .forum-finder h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #1a1a2e;
+        }
+        
+        .filter-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .filter-group {
+            flex-grow: 1;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .filter-group select, 
+        .filter-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+        
+        .filter-button {
+            background-color: #1a1a2e;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        
+        .filter-button:hover {
+            background-color: #282846;
+        }
+        
+        .forums-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .forum-card {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .forum-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .forum-banner {
+            height: 120px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .forum-content {
+            padding: 1.5rem;
+        }
+        
+        .forum-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .forum-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #777;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+        
+        .forum-description {
+            color: #555;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .tag {
+            display: inline-block;
+            background-color: #e9f0fe;
+            color: #4d8bf5;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        footer {
+            background-color: #1a1a2e;
+            color: #aaa;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h4 {
+            color: #fff;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-column a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer-column a:hover {
+            color: #4d8bf5;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #333;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .filter-section {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <span>Nerd</span><span class="highlight">Zone</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Forums</a></li>
+                    <li><a href="#">Articles</a></li>
+                    <li><a href="#">Resources</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <h1>Welcome to NerdZone</h1>
+            <p>Join the ultimate community of science enthusiasts discussing everything from ancient alchemy to quantum computing. Connect with fellow nerds, share your knowledge, and explore the wonders of science across all time periods.</p>
+            <a href="#" class="cta-button">Join The Community</a>
+        </section>
+        
+        <section class="forum-finder">
+            <h2>Find Your Perfect Forum</h2>
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label for="time-period">Time Period</label>
+                    <select id="time-period">
+                        <option value="all">All Time Periods</option>
+                        <option value="ancient">Ancient Science (3000 BCE - 500 CE)</option>
+                        <option value="medieval">Medieval Science (500 - 1500 CE)</option>
+                        <option value="renaissance">Renaissance Science (1500 - 1700)</option>
+                        <option value="enlightenment">Enlightenment Era (1700 - 1900)</option>
+                        <option value="modern">Modern Science (1900 - 2000)</option>
+                        <option value="contemporary">Contemporary Science (2000 - Present)</option>
+                        <option value="future">Future Science & Speculation</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="discipline">Scientific Discipline</label>
+                    <select id="discipline">
+                        <option value="all">All Disciplines</option>
+                        <option value="physics">Physics</option>
+                        <option value="chemistry">Chemistry</option>
+                        <option value="biology">Biology</option>
+                        <option value="astronomy">Astronomy & Cosmology</option>
+                        <option value="mathematics">Mathematics</option>
+                        <option value="medicine">Medicine & Health Sciences</option>
+                        <option value="engineering">Engineering & Technology</option>
+                        <option value="earth">Earth & Environmental Sciences</option>
+                        <option value="philosophy">Philosophy of Science</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="activity">Activity Level</label>
+                    <select id="activity">
+                        <option value="all">Any Activity Level</option>
+                        <option value="very-active">Very Active (10+ posts daily)</option>
+                        <option value="active">Active (5-10 posts daily)</option>
+                        <option value="moderate">Moderate (1-5 posts daily)</option>
+                        <option value="low">Low Activity (Weekly posts)</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="search">Keyword Search</label>
+                    <input type="text" id="search" placeholder="Search forums...">
+                </div>
+            </div>
+            
+            <button class="filter-button" id="apply-filters">Apply Filters</button>
+            
+            <div class="forums-list" id="forums-container">
+                <!-- Forum cards will be dynamically generated here -->
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>NerdZone</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Mission</a></li>
+                    <li><a href="#">Community Guidelines</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="#">Forums</a></li>
+                    <li><a href="#">Featured Discussions</a></li>
+                    <li><a href="#">Scientific Articles</a></li>
+                    <li><a href="#">Resources</a></li>
+                    <li><a href="#">Events</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Account</h4>
+                <ul>
+                    <li><a href="#">Sign Up</a></li>
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Profile Settings</a></li>
+                    <li><a href="#">Notifications</a></li>
+                    <li><a href="#">Privacy Settings</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Follow Us</h4>
+                <ul>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">YouTube</a></li>
+                    <li><a href="#">Discord</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2025 NerdZone. All rights reserved.
+        </div>
+    </footer>
+    
+    <script>
+        // Sample forum data
+        const forums = [
+            {
+                id: 1,
+                name: "Quantum Physics Discussions",
+                discipline: "physics",
+                timePeriod: "contemporary",
+                activity: "very-active",
+                members: 3542,
+                posts: 15287,
+                banner: "linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)",
+                description: "Discuss cutting-edge quantum theories, experiments, and their implications for our understanding of reality.",
+                tags: ["Quantum Mechanics", "Quantum Computing", "Entanglement"]
+            },
+            {
+                id: 2,
+                name: "Ancient Astronomy",
+                discipline: "astronomy",
+                timePeriod: "ancient",
+                activity: "moderate",
+                members: 1289,
+                posts: 5431,
+                banner: "linear-gradient(135deg, #3a1c71 0%, #d76d77 50%, #ffaf7b 100%)",
+                description: "Explore how ancient civilizations understood the cosmos, from Babylon to China to Maya.",
+                tags: ["Ancient Civilizations", "Archaeoastronomy", "Star Charts"]
+            },
+            {
+                id: 3,
+                name: "Renaissance Medicine",
+                discipline: "medicine",
+                timePeriod: "renaissance",
+                activity: "active",
+                members: 982,
+                posts: 4217,
+                banner: "linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%)",
+                description: "Discuss medical practices, discoveries and anatomical studies during the Renaissance period.",
+                tags: ["Anatomy", "Vesalius", "Medical History"]
+            },
+            {
+                id: 4,
+                name: "Evolutionary Biology",
+                discipline: "biology",
+                timePeriod: "modern",
+                activity: "very-active",
+                members: 2871,
+                posts: 12453,
+                banner: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)",
+                description: "Discuss Darwin's theory of evolution, modern synthesis, and latest research in evolutionary biology.",
+                tags: ["Natural Selection", "Genetics", "Speciation"]
+            },
+            {
+                id: 5,
+                name: "Medieval Alchemy",
+                discipline: "chemistry",
+                timePeriod: "medieval",
+                activity: "moderate",
+                members: 754,
+                posts: 2187,
+                banner: "linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%)",
+                description: "Explore alchemical practices, philosophical foundations, and the proto-scientific methods of the medieval period.",
+                tags: ["Transmutation", "Elixirs", "Philosopher's Stone"]
+            },
+            {
+                id: 6,
+                name: "AI and Future Computing",
+                discipline: "engineering",
+                timePeriod: "future",
+                activity: "very-active",
+                members: 4125,
+                posts: 18754,
+                banner: "linear-gradient(135deg, #0cebeb 0%, #20e3b2 50%, #29ffc6 100%)",
+                description: "Speculate and discuss the future of artificial intelligence, quantum computing, and their implications for society.",
+                tags: ["AI", "Quantum Computing", "Transhumanism"]
+            },
+            {
+                id: 7,
+                name: "Enlightenment Mathematics",
+                discipline: "mathematics",
+                timePeriod: "enlightenment",
+                activity: "low",
+                members: 627,
+                posts: 1854,
+                banner: "linear-gradient(135deg, #3f2b96 0%, #a8c0ff 100%)",
+                description: "Discuss the mathematical innovations of the Enlightenment era, from calculus to probability theory.",
+                tags: ["Calculus", "Newton", "Leibniz"]
+            },
+            {
+                id: 8,
+                name: "Climate Science & Modeling",
+                discipline: "earth",
+                timePeriod: "contemporary",
+                activity: "active",
+                members: 1897,
+                posts: 8432,
+                banner: "linear-gradient(135deg, #134e5e 0%, #71b280 100%)",
+                description: "Discuss current climate research, models, data analysis, and environmental science.",
+                tags: ["Climate Change", "Data Analysis", "Environmental Science"]
+            },
+            {
+                id: 9,
+                name: "Philosophy of Scientific Method",
+                discipline: "philosophy",
+                timePeriod: "all",
+                activity: "moderate",
+                members: 1243,
+                posts: 5876,
+                banner: "linear-gradient(135deg, #c33764 0%, #1d2671 100%)",
+                description: "Explore the epistemological foundations of science across all time periods, from ancient to modern.",
+                tags: ["Epistemology", "Methodology", "Scientific Revolution"]
+            }
+        ];
+
+        // Function to render forum cards
+        function renderForums(forumsList) {
+            const container = document.getElementById('forums-container');
+            container.innerHTML = '';
+            
+            if (forumsList.length === 0) {
+                container.innerHTML = '<p style="text-align: center; padding: 2rem; color: #777;">No forums match your criteria. Try adjusting your filters.</p>';
+                return;
+            }
+            
+            forumsList.forEach(forum => {
+                const card = document.createElement('div');
+                card.className = 'forum-card';
+                
+                let tagsHTML = '';
+                forum.tags.forEach(tag => {
+                    tagsHTML += `<span class="tag">${tag}</span>`;
+                });
+                
+                card.innerHTML = `
+                    <div class="forum-banner" style="background: ${forum.banner}"></div>
+                    <div class="forum-content">
+                        <h3>${forum.name}</h3>
+                        <div class="forum-meta">
+                            <span>${forum.members} members</span>
+                            <span>${forum.posts} posts</span>
+                        </div>
+                        <p class="forum-description">${forum.description}</p>
+                        <div class="forum-tags">
+                            ${tagsHTML}
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Filter forums based on selected criteria
+        function filterForums() {
+            const timePeriod = document.getElementById('time-period').value;
+            const discipline = document.getElementById('discipline').value;
+            const activity = document.getElementById('activity').value;
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            
+            return forums.filter(forum => {
+                // Check time period
+                if (timePeriod !== 'all' && forum.timePeriod !== timePeriod) {
+                    return false;
+                }
+                
+                // Check discipline
+                if (discipline !== 'all' && forum.discipline !== discipline) {
+                    return false;
+                }
+                
+                // Check activity level
+                if (activity !== 'all' && forum.activity !== activity) {
+                    return false;
+                }
+                
+                // Check search term
+                if (searchTerm && !forum.name.toLowerCase().includes(searchTerm) && 
+                    !forum.description.toLowerCase().includes(searchTerm) &&
+                    !forum.tags.some(tag => tag.toLowerCase().includes(searchTerm))) {
+                    return false;
+                }
+                
+                return true;
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            renderForums(forums);
+            
+            // Add event listener to the filter button
+            document.getElementById('apply-filters').addEventListener('click', () => {
+                const filteredForums = filterForums();
+                renderForums(filteredForums);
+            });
+            
+            // Add event listeners for responsive filter updates
+            const filterElements = ['time-period', 'discipline', 'activity', 'search'];
+            filterElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (id === 'search') {
+                    element.addEventListener('input', () => {
+                        if (element.value.length > 2 || element.value.length === 0) {
+                            const filteredForums = filterForums();
+                            renderForums(filteredForums);
+                        }
+                    });
+                } else {
+                    element.addEventListener('change', () => {
+                        const filteredForums = filterForums();
+                        renderForums(filteredForums);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
